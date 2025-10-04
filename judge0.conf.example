@@ -1,0 +1,148 @@
+# ============================================================
+# Judge0 Custom - Arquivo de Configuração
+# ============================================================
+# Este arquivo contém todas as variáveis de ambiente necessárias
+# para configurar o Judge0 Custom.
+# 
+# IMPORTANTE: Renomeie este arquivo para judge0.conf antes de usar!
+# ============================================================
+
+# ============================================================
+# REDIS CONFIGURATION
+# ============================================================
+REDIS_HOST=redis
+REDIS_PORT=6379
+# REDIS_PASSWORD=yourRedisPassword  # Descomente se usar senha
+
+# ============================================================
+# POSTGRES CONFIGURATION
+# ============================================================
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+POSTGRES_DB=judge0
+POSTGRES_USER=judge0
+POSTGRES_PASSWORD=YourSecurePassword123!  # MUDE ESTA SENHA!
+
+# ============================================================
+# JUDGE0 VERSION & QUEUE
+# ============================================================
+JUDGE0_VERSION=1.13.0
+
+# ============================================================
+# RESOURCE LIMITS
+# ============================================================
+# Tempo máximo de CPU (segundos)
+MAX_CPU_TIME_LIMIT=15
+
+# Tempo máximo de parede (segundos)
+MAX_WALL_TIME_LIMIT=30
+
+# Tamanho máximo de arquivo (KB)
+MAX_FILE_SIZE=1024
+
+# Memória máxima (KB)
+MAX_MEMORY_LIMIT=512000
+
+# Tamanho máximo de pilha (KB)
+MAX_STACK_LIMIT=128000
+
+# Número máximo de processos/threads
+MAX_PROCESSES_AND_OR_THREADS=60
+
+# Tamanho máximo da fila
+MAX_QUEUE_SIZE=100
+
+# Tamanho máximo do código-fonte (KB)
+MAX_SOURCE_CODE_SIZE=16384
+
+# ============================================================
+# FEATURES
+# ============================================================
+# Habilitar resultado síncrono (wait=true)
+ENABLE_WAIT_RESULT=true
+
+# Habilitar opções de compilador customizadas
+ENABLE_COMPILER_OPTIONS=true
+
+# Habilitar callbacks HTTP
+ENABLE_CALLBACKS=true
+
+# Habilitar arquivos adicionais (multi-file programs)
+ENABLE_ADDITIONAL_FILES=true
+
+# Habilitar acesso à rede (cuidado com segurança!)
+ENABLE_NETWORK=false
+
+# Habilitar modo de execução em lote
+ENABLE_BATCH_SUBMISSIONS=true
+
+# ============================================================
+# SECURITY
+# ============================================================
+# Desabilitar codificação Base64 implícita
+# DISABLE_IMPLICIT_BASE64_ENCODING=false
+
+# Habilitar autenticação (requer configuração adicional)
+# ENABLE_AUTHENTICATION=false
+# AUTHENTICATION_TOKEN=your-secret-token
+
+# ============================================================
+# PERFORMANCE
+# ============================================================
+# Duração do cache de submissões (segundos)
+SUBMISSION_CACHE_DURATION=1
+
+# Número de workers Resque
+COUNT=2
+
+# Fila a ser processada
+QUEUE=default
+
+# ============================================================
+# MAINTENANCE
+# ============================================================
+# Habilitar modo de manutenção
+ENABLE_MAINTENANCE_MODE=false
+
+# Mensagem de manutenção
+# MAINTENANCE_MESSAGE=Judge0 is under maintenance. Please try again later.
+
+# ============================================================
+# TELEMETRY (opcional)
+# ============================================================
+# Habilitar telemetria
+# ENABLE_TELEMETRY=false
+
+# ============================================================
+# CUSTOM LANGUAGE PATHS (para desenvolvimento local)
+# ============================================================
+# Estes paths são montados automaticamente pelo docker-compose.custom.yml
+# Unity libs: ./unity-libs -> /usr/local/unity-libs
+# Unreal headers: ./unreal-headers -> /usr/local/unreal-headers
+
+# ============================================================
+# LOGGING
+# ============================================================
+# Nível de log do Rails (debug, info, warn, error)
+RAILS_LOG_LEVEL=info
+
+# ============================================================
+# ENVIRONMENT
+# ============================================================
+RAILS_ENV=production
+NODE_ENV=production
+
+# ============================================================
+# CORS (Cross-Origin Resource Sharing)
+# ============================================================
+# Origens permitidas (separadas por vírgula)
+# CORS_ALLOWED_ORIGINS=http://localhost:3000,https://yourdomain.com
+
+# ============================================================
+# NOTAS IMPORTANTES
+# ============================================================
+# 1. Sempre use senhas fortes para produção
+# 2. Mantenha ENABLE_NETWORK=false a menos que absolutamente necessário
+# 3. Ajuste os limites de recursos conforme a capacidade do seu servidor
+# 4. Para produção, considere habilitar autenticação
+# 5. Faça backup regular do banco de dados PostgreSQL

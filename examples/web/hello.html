@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- HTML/CSS/JavaScript Example -->
+<!-- Language ID: 100 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Judge0 HTML Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello from HTML!</h1>
+    </div>
+    
+    <script>
+        // JavaScript execution
+        console.log("Hello from embedded JavaScript!");
+        
+        const data = {
+            title: "Judge0 Test",
+            timestamp: new Date().toISOString()
+        };
+        
+        console.log("Test data:", JSON.stringify(data, null, 2));
+        
+        // Math operations
+        const result = Array.from({length: 10}, (_, i) => i * 2);
+        console.log("Even numbers 0-18:", result);
+    </script>
+</body>
+</html>

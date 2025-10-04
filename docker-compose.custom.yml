@@ -1,0 +1,112 @@
+version: '3.7'
+
+# Custom Judge0 Docker Compose Configuration
+# For game development and web development environments
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "100m"
+    max-file: "3"
+
+services:
+  # Main Judge0 Server
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.custom
+    image: judge0-custom:latest
+    container_name: judge0-server
+    privileged: true
+    volumes:
+      - ./db/languages:/usr/local/judge0/db/languages:ro
+      - ./unity-libs:/usr/local/unity-libs:ro
+      - ./unreal-headers:/usr/local/unreal-headers:ro
+    ports:
+      - "2358:2358"
+    env_file:
+      - judge0.conf
+    environment:
+      - JUDGE0_VERSION=1.13.0
+      - ENABLE_WAIT_RESULT=true
+      - ENABLE_COMPILER_OPTIONS=true
+      - ENABLE_CALLBACKS=true
+      - ENABLE_ADDITIONAL_FILES=true
+      - MAX_QUEUE_SIZE=100
+      - MAX_CPU_TIME_LIMIT=15
+      - MAX_MEMORY_LIMIT=512000
+      - MAX_PROCESSES_AND_OR_THREADS=60
+      - SUBMISSION_CACHE_DURATION=1
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+    logging: *default-logging
+    networks:
+      - judge0-network
+
+  # Resque Workers (for background job processing)
+  workers:
+    build:
+      context: .
+      dockerfile: Dockerfile.custom
+    image: judge0-custom:latest
+    container_name: judge0-workers
+    privileged: true
+    command: ["./scripts/workers"]
+    volumes:
+      - ./db/languages:/usr/local/judge0/db/languages:ro
+      - ./unity-libs:/usr/local/unity-libs:ro
+      - ./unreal-headers:/usr/local/unreal-headers:ro
+    env_file:
+      - judge0.conf
+    environment:
+      - JUDGE0_VERSION=1.13.0
+      - COUNT=2
+      - QUEUE=default
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+    logging: *default-logging
+    networks:
+      - judge0-network
+
+  # PostgreSQL Database
+  db:
+    image: postgres:13
+    container_name: judge0-db
+    env_file:
+      - judge0.conf
+    environment:
+      - POSTGRES_USER=judge0
+      - POSTGRES_PASSWORD=YourSecurePassword
+      - POSTGRES_DB=judge0
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    logging: *default-logging
+    networks:
+      - judge0-network
+
+  # Redis (for job queue)
+  redis:
+    image: redis:7-alpine
+    container_name: judge0-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    logging: *default-logging
+    networks:
+      - judge0-network
+
+volumes:
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  judge0-network:
+    driver: bridge

@@ -1,0 +1,53 @@
+{
+  "name": "PlayerController",
+  "description": "Example Unreal Engine Blueprint in JSON format",
+  "language_id": 114,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Event BeginPlay",
+      "position": {"x": 0, "y": 0}
+    },
+    {
+      "id": 2,
+      "type": "Print String",
+      "position": {"x": 200, "y": 0},
+      "parameters": {
+        "text": "Hello from Blueprint!"
+      }
+    },
+    {
+      "id": 3,
+      "type": "Set Player Health",
+      "position": {"x": 400, "y": 0},
+      "parameters": {
+        "health": 100
+      }
+    },
+    {
+      "id": 4,
+      "type": "Branch",
+      "position": {"x": 600, "y": 0},
+      "parameters": {
+        "condition": "health > 0"
+      }
+    }
+  ],
+  "connections": [
+    {"from": 1, "to": 2},
+    {"from": 2, "to": 3},
+    {"from": 3, "to": 4}
+  ],
+  "variables": [
+    {
+      "name": "PlayerHealth",
+      "type": "float",
+      "default": 100.0
+    },
+    {
+      "name": "PlayerName",
+      "type": "string",
+      "default": "Hero"
+    }
+  ]
+}
